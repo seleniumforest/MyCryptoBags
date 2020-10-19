@@ -9,11 +9,12 @@ services:
     volumes:
       - './node:/usr/src/app'
       - '/usr/src/app/node_modules'
-#    ports:
-#      - 3001:3001
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
+      - COINGECKO_CACHE_TIMEOUT=30
+    ports:
+      - 9229:9229
 
   client:
     build:
@@ -22,12 +23,9 @@ services:
     volumes:
       - './client:/usr/src/app'
       - '/usr/src/app/node_modules'
-#    ports:
-#      - 3000:3000
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
-      - REACT_APP_API_URL=${REACT_APP_API_URL}
     depends_on:
       - node
 

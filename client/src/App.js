@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import Portfolio from './components/Portfolio';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App(props) {
 
@@ -30,9 +32,9 @@ function App(props) {
   }
 
   return (
-    <p>
-      { errorMessage.length > 0 ? errorMessage : `Gecko_says: ${geckoSays}` }
-    </p> 
+    <>
+      <Portfolio />
+    </>
   );
 }
 

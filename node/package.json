@@ -13,6 +13,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "coingecko-api": "^1.0.10",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "node-cache": "^5.1.2"
   }
 }

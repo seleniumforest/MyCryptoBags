@@ -8,8 +8,15 @@ const CoinGeckoClient = new CoinGecko();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+var cache = null;
+
 app.get('/api/ping', async (req, res) => {
-    res.json(await CoinGeckoClient.ping());
+    if (cache != null)
+        return res.json(cache);
+
+    var data = await CoinGeckoClient.ping();
+    cache = data;
+    return res.json(cache);
 });
 
 app.listen(PORT, function() {

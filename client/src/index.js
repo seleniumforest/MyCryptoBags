@@ -4,12 +4,15 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux'
-import ping from './reducers/ping'
+import portfolio from './reducers/portfolio'
 import { Provider } from 'react-redux';
 
-const store = createStore(ping)
+const store = createStore(portfolio)
 
-const render = () => ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+const render = () => ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>, document.getElementById('root'));
 
 render();
 store.subscribe(render);

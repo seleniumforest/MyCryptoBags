@@ -1,28 +1,12 @@
-import { Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import React from 'react';
 import './Portfolio.scss'
-import BootstrapTable from 'react-bootstrap-table-next';
-import Select from "react-select";
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
-
-const columns = [{
-    dataField: 'value',
-    text: 'value'
-},
-{
-    dataField: 'label',
-    text: 'label'
-},
-{
-    dataField: 'price',
-    text: 'Price'
-}];
+import AddCoin from './AddCoin';
 
 function Portfolio() {
-    const { selectedOption, allcoins, coinsLoaded, selectedcoins } = useSelector(state => ({
-        selectedOption: state.selectedOption,
-        allcoins: state.allcoins,
+    const { coinsLoaded, selectedcoins } = useSelector(state => ({
         coinsLoaded: state.coinsLoaded,
         selectedcoins: state.selectedcoins
     }), shallowEqual);
@@ -33,35 +17,59 @@ function Portfolio() {
         axios
             .get('/api/coins/all')
             .then(x => {
-                dispatch({ type: 'fetch_allcoins', payload: { allcoins: x.data, coinsLoaded: true } });
+                dispatch({ type: 'fetch_coins', payload: { coins: x.data, coinsLoaded: true } });
             });
     };
 
-    console.log(allcoins);
-
     return (
         <>
-            <div className="portfolio-table">
-                <h3>Your assets</h3>
-                <BootstrapTable keyField='id' data={selectedcoins} columns={columns} />
+            <div className="portfolio-total">
+                <h3>Your portfolio total</h3>
+                <h4>
+                    {parseFloat(selectedcoins.reduce((a, b) => a + (b.price * b.count), 0))}
+                </h4>
             </div>
-            <div className="portfolio-search">
+            <div className="portfolio-table">
+                <h3>Manage your assets</h3>
                 <Container>
-                    <Row>
-                        <Select className="portfolio-search-input"
-                            defaultValue={selectedOption}
-                            options={allcoins}
-                            placeholder="Search and add coin..."
-                            onChange={(value) => {
-                                if (selectedcoins.filter(x => x.value === value.value).length === 0)
-                                    dispatch({ type: 'add_coin', payload: { newCoin: value } })
-                            }}
-                        />
-                    </Row>
+                    <PortfolioHeaders />
+                    {selectedcoins.map((x) =>
+                        <Row key={x.id}>
+                            <Col sm={3}>{x.label}</Col>
+                            <Col sm={2}>{x.price}</Col>
+                            <Col sm={3}>
+                                <input
+                                    type="text"
+                                    placeholder="count"
+                                    value={x.count}
+                                    onChange={(e) => {
+                                        dispatch({ type: 'add_coin_value', payload: { id: x.id, count: e.target.value } })
+                                    }}
+                                    className="form-control ds-input" />
+                            </Col>
+                            <Col sm={2}> {parseFloat(x.price * x.count).toFixed(3)}</Col>
+                            <Col sm={1}>
+                                <Button onClick={() => dispatch({ type: "remove_coin", payload: { id: x.id } })}>
+                                    Delete
+                                </Button>
+                            </Col>
+                        </Row>
+                    )}
+                    <AddCoin />
                 </Container>
             </div>
         </>
     );
-}
+};
+
+var PortfolioHeaders = () => {
+    return <Row>
+        <Col sm={3}>Coin</Col>
+        <Col sm={2}>Price</Col>
+        <Col sm={3}>Count</Col>
+        <Col sm={2}>Total $</Col>
+        <Col sm={1}></Col>
+    </Row>
+};
 
 export default Portfolio;

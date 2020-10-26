@@ -1,9 +1,13 @@
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import React from 'react';
 import './Portfolio.scss'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
 import AddCoin from './AddCoin';
+import CoinList from './CoinList';
+import numeral from 'numeral';
+
+const numberFormat = '$0,0.00';
 
 function Portfolio() {
     const { coinsLoaded, selectedcoins } = useSelector(state => ({
@@ -22,52 +26,33 @@ function Portfolio() {
     };
 
     return (
-        <>
-            <div className="portfolio-total">
-                <h3>Your portfolio total</h3>
-                <h4>
-                    {parseFloat(selectedcoins.reduce((a, b) => a + (b.price * b.count), 0)).toFixed(3)}
-                </h4>
+        <Container>
+            <div className="portfolio">
+                <div className="portfolio-total">
+                    <h3>Your portfolio total</h3>
+                    <h5>
+                        {numeral(selectedcoins.reduce((a, b) => a + (b.price * b.count), 0)).format(numberFormat)}
+                    </h5>
+                </div>
+                <div className="portfolio-table">
+                    <h3>Manage your assets</h3>
+                    <Container>
+                        <PortfolioHeaders />
+                        <CoinList />
+                        <AddCoin />
+                    </Container>
+                </div>
             </div>
-            <div className="portfolio-table">
-                <h3>Manage your assets</h3>
-                <Container>
-                    <PortfolioHeaders />
-                    {selectedcoins.map((x) =>
-                        <Row key={x.id}>
-                            <Col sm={3}>{x.label}</Col>
-                            <Col sm={2}>{x.price}</Col>
-                            <Col sm={3}>
-                                <input
-                                    type="text"
-                                    placeholder="count"
-                                    value={x.count}
-                                    onChange={(e) => {
-                                        dispatch({ type: 'add_coin_value', payload: { id: x.id, count: e.target.value } })
-                                    }}
-                                    className="form-control ds-input" />
-                            </Col>
-                            <Col sm={2}> {parseFloat(x.price * x.count).toFixed(3)}</Col>
-                            <Col sm={1}>
-                                <Button onClick={() => dispatch({ type: "remove_coin", payload: { id: x.id } })}>
-                                    Delete
-                                </Button>
-                            </Col>
-                        </Row>
-                    )}
-                    <AddCoin />
-                </Container>
-            </div>
-        </>
+        </Container>
     );
 };
 
-var PortfolioHeaders = () => <Row>
-        <Col sm={3}>Coin</Col>
-        <Col sm={2}>Price</Col>
-        <Col sm={3}>Count</Col>
-        <Col sm={2}>Total $</Col>
-        <Col sm={1}></Col>
-    </Row>
+var PortfolioHeaders = () => <Row className="portfolio-table__headers">
+    <Col xs={3} lg={2}>Coin</Col>
+    <Col xs={2} lg={2}>Price</Col>
+    <Col xs={3} lg={2}>Count</Col>
+    <Col xs={2} lg={2}>Total</Col>
+    <Col xs={1} lg={1}></Col>
+</Row>
 
 export default Portfolio;

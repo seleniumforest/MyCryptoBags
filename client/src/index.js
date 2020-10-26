@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux'
 import portfolio from './reducers/portfolio'
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
 let persistedState = undefined;
 const cacheKey = 'portfolio';
@@ -18,7 +19,9 @@ const store = createStore(portfolio, persistedState);
 
 const render = () => ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </Provider>, document.getElementById('root'));
 
 render();

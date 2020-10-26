@@ -1,6 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import React from 'react';
-import './Portfolio.scss'
+import './AddCoin.scss'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select';
 
@@ -12,8 +12,8 @@ function AddCoin() {
     const dispatch = useDispatch();
 
     return (
-        <Row>
-            <Col sm={4}>Choose coin to add</Col>
+        <Row className="add-coin">
+            <Col sm={2}><b>Choose coin to add</b></Col>
             <Col sm={4}>
                 <Select className="portfolio-search-input"
                     options={coins}

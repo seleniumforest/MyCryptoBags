@@ -26,7 +26,7 @@ function Portfolio() {
             <div className="portfolio-total">
                 <h3>Your portfolio total</h3>
                 <h4>
-                    {parseFloat(selectedcoins.reduce((a, b) => a + (b.price * b.count), 0))}
+                    {parseFloat(selectedcoins.reduce((a, b) => a + (b.price * b.count), 0)).toFixed(3)}
                 </h4>
             </div>
             <div className="portfolio-table">
@@ -62,14 +62,12 @@ function Portfolio() {
     );
 };
 
-var PortfolioHeaders = () => {
-    return <Row>
+var PortfolioHeaders = () => <Row>
         <Col sm={3}>Coin</Col>
         <Col sm={2}>Price</Col>
         <Col sm={3}>Count</Col>
         <Col sm={2}>Total $</Col>
         <Col sm={1}></Col>
     </Row>
-};
 
 export default Portfolio;

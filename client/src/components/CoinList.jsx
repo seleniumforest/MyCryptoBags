@@ -7,15 +7,15 @@ import numeral from 'numeral';
 const numberFormat = '$0,0.00';
 
 function CoinList() {
-    const { selectedcoins } = useSelector(state => ({
-        selectedcoins: state.selectedcoins
+    const { selectedCoins } = useSelector(state => ({
+        selectedCoins: state.selectedCoins
     }), shallowEqual);
 
     const dispatch = useDispatch();
 
     return (
         <>
-            {selectedcoins.map((x) =>
+            {selectedCoins.map((x) =>
                 <Row key={x.id} className="portfolio-table__row">
                     <Col xs={3} lg={2}>{x.label}</Col>
                     <Col xs={2} lg={2}>{numeral(x.price).format(numberFormat)}</Col>

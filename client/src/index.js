@@ -29,7 +29,7 @@ render();
 store.subscribe(() => {
     var state = store.getState();
     var data = {
-        selectedcoins: state.selectedcoins
+        selectedCoins: state.selectedCoins
     }
     localStorage.setItem(cacheKey, JSON.stringify(data))
 })

@@ -7,14 +7,14 @@ import './PortfolioTotal.scss';
 const numberFormat = '$0,0.00';
 
 function PortfolioTotal() {
-    const { selectedcoins } = useSelector(state => ({
-        selectedcoins: state.selectedcoins
+    const { selectedCoins } = useSelector(state => ({
+        selectedCoins: state.selectedCoins
     }), shallowEqual);
 
     return (
         <Container>
             <p>
-                {numeral(selectedcoins.reduce((a, b) => a + (b.price * b.count), 0)).format(numberFormat)}
+                {numeral(selectedCoins.reduce((a, b) => a + (b.price * b.count), 0)).format(numberFormat)}
             </p>
         </Container>
     );

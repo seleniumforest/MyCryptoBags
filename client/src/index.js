@@ -8,6 +8,7 @@ import portfolio from './reducers/portfolio'
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
+//todo need to create bridge between localstorage and state
 let persistedState = undefined;
 const cacheKey = 'portfolio';
 const cacheData = localStorage.getItem(cacheKey);

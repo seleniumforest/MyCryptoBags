@@ -19,7 +19,7 @@ app.get(coinAllUrl, async (req, res) => {
     if (cached != null)
         return res.json(cached);
 
-    var coins1 = await CoinGeckoClient.coins.all({per_page: 100});
+    var coins1 = await CoinGeckoClient.coins.all({ per_page: 100 });
 
     var formattedData = coins1.data.map((coin) => {
         return {
@@ -42,3 +42,12 @@ app.get('/api/ping', async (req, res) => {
 app.listen(PORT, function () {
     console.log("Node Server running on PORT:" + PORT);
 });
+
+const mongoose = require("mongoose");
+mongoose
+  .connect(
+    'mongodb://mongo:27017/',
+    { useNewUrlParser: true }
+  )
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log("errorErrorError " + err));

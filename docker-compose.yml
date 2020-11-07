@@ -1,28 +1,31 @@
-version: '3.6'
+version: "3.6"
 
 services:
-
   node:
     build:
       context: ./node
       dockerfile: Dockerfile-dev
     volumes:
-      - './node:/usr/src/app'
-      - '/usr/src/app/node_modules'
+      - "./node:/usr/src/app"
+      - "/usr/src/app/node_modules"
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
       - COINGECKO_CACHE_TIMEOUT=30
     ports:
       - 9229:9229
+    depends_on:
+      - mongodb
+    links:
+      - "mongodb:mongo"
 
   client:
     build:
       context: ./client
       dockerfile: Dockerfile-dev
     volumes:
-      - './client:/usr/src/app'
-      - '/usr/src/app/node_modules'
+      - "./client:/usr/src/app"
+      - "/usr/src/app/node_modules"
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
@@ -39,3 +42,9 @@ services:
     depends_on:
       - node
       - client
+      - mongodb
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"

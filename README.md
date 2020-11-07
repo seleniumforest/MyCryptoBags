@@ -10,9 +10,10 @@ Test server: http://40.69.200.118/
 
 ## TODO List
 
+Add MongoDB
+
 Export data: 
-  - as json file 
-  - to IPFS (Orbit DB) 
+  - as json file
   
 Import token lists from 
   - ethereum wallet !important

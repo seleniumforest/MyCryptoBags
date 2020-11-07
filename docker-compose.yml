@@ -12,6 +12,7 @@ services:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
       - COINGECKO_CACHE_TIMEOUT=30
+      - MONGO_CONNECTION_STRING=mongodb://mongo:27017/
     ports:
       - 9229:9229
     depends_on:

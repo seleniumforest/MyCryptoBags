@@ -9,15 +9,15 @@ docker-compose up --build
 Test server: http://40.69.200.118/
 
 ## TODO List
-
-Add MongoDB
-
-Export data: 
-  - as json file
   
+Add telegram bot to manage assets (research)
+ 
 Import token lists from 
   - ethereum wallet !important
   - other services
+  
+Export data: 
+  - as json file
   
 Authentication
   - Metamask !important

@@ -3,20 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { createStore } from 'redux'
-import portfolio from './reducers/portfolio'
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import store from './store';
 
-//todo need to create bridge between localstorage and state
-let persistedState = undefined;
 const cacheKey = 'portfolio';
-const cacheData = localStorage.getItem(cacheKey);
-
-if (cacheData)
-    persistedState = JSON.parse(cacheData);
-
-const store = createStore(portfolio, persistedState);
 
 const render = () => ReactDOM.render(
     <Provider store={store}>

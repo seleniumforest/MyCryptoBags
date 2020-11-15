@@ -18,12 +18,15 @@ bagsRouter.get('/:address', (req, res) => {
 });
 
 bagsRouter.post('', (req, res) => {
+    console.log(req.body);
+
     mongoClient.connect(async (err, client) => {
         const db = client.db("crypto");
         const collection = db.collection("bags");
 
-        let result = await collection.insertOne(req.body);
-        res.sendStatus(result.result.ok === 1 ? 200 : 500)
+        await collection.updateOne({ address: req.body.address }, { $set: { address: req.body.address, bags: [ ...req.body.bags ] } }, { upsert: true });
+
+        res.sendStatus(200);
     })
 });
 

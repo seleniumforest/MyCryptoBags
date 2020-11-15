@@ -3,7 +3,7 @@ import Portfolio from './components/Portfolio';
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route } from "react-router-dom";
-import TempLink from './components/Link';
+import Options from './components/Options';
 import Header from './components/Header';
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
           <Portfolio />
         </Route>
         <Route path="/link">
-          <TempLink />
+          <Options />
         </Route>
         <Route path="/">
           <Portfolio />

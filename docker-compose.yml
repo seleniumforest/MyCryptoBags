@@ -10,6 +10,7 @@ services:
       - "/usr/src/app/node_modules"
     environment:
       - NODE_ENV=development
+      - NODE_PORT=3001
       - CHOKIDAR_USEPOLLING=true
       - COINGECKO_CACHE_TIMEOUT=30
       - MONGO_CONNECTION_STRING=mongodb://mongo:27017/

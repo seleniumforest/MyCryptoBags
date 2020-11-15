@@ -12,11 +12,14 @@ function PortfolioTotal() {
     }), shallowEqual);
 
     return (
-        <Container>
-            <p>
-                {numeral(selectedCoins.reduce((a, b) => a + (b.price * b.count), 0)).format(numberFormat)}
-            </p>
-        </Container>
+        <>
+            <h3>Your portfolio total</h3>
+            <Container>
+                <p>
+                    {numeral(selectedCoins.reduce((a, b) => a + (b.price * b.count), 0)).format(numberFormat)}
+                </p>
+            </Container>
+        </>
     );
 }
 

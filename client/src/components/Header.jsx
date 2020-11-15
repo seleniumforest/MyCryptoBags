@@ -1,26 +1,43 @@
+import Axios from 'axios';
 import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Button } from 'react-bootstrap';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Link } from 'react-router-dom';
+import store from '../store';
 
 function Header() {
-    const { userAddress } = useSelector(state => ({
-        userAddress: state.userAddress
+    const { userAddress, selectedCoins } = useSelector(state => ({
+        userAddress: state.userAddress,
+        selectedCoins: state.selectedCoins
     }), shallowEqual);
 
     const dispatch = useDispatch();
 
-    function connect() {
+    let connect = () => {
         //todo catch error when user has no metamask installed
-        if (typeof window.ethereum === 'undefined')
+        if (typeof window.ethereum === 'undefined' || userAddress)
             return;
 
         window.ethereum
             .request({ method: 'eth_requestAccounts' })
             .then(x => {
                 dispatch({ type: 'set_user_address', payload: { userAddress: x[0] } });
+                dispatch({ type: 'start_portfolio_updating', payload: { timerId: setInterval(updateOnServer, 2000) } });
             });
     };
+
+    function updateOnServer() {
+        let state = store.getState();
+        console.log(state);
+        if (!state.updating.hasChanges || !state.userAddress)
+            return;
+
+        Axios
+            .post('/api/bags', { address: state.userAddress, bags: state.selectedCoins })
+            .then((response) => {
+                dispatch({ type: 'portfolio_updated' });
+            })
+    }
 
     function getConnectLabel() {
         if (userAddress) {
@@ -42,7 +59,7 @@ function Header() {
                     <Link to="/link" className="nav-link">Options</Link>
                 </Nav>
                 <Nav>
-                    <Link onClick={connect} className="nav-link navbar-right">{getConnectLabel()}</Link>
+                    <Button className="nav-link navbar-right" onClick={connect}>{getConnectLabel()}</Button>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

@@ -26,7 +26,6 @@ function Portfolio() {
         <Container>
             <div className="portfolio">
                 <div className="portfolio-total">
-                    <h3>Your portfolio total</h3>        
                     <PortfolioTotal />          
                 </div>
                 <div className="portfolio-table">

@@ -2,7 +2,12 @@ let defaultState = {
     coins: [],
     coinsLoaded: false,
     selectedCoins: [],
-    userAddress: ''
+    userAddress: '',
+    updating: {
+        timerId: 0,
+        lastUpdatedTime: 0,
+        hasChanges: false
+    }
 };
 
 export default (state = defaultState, action) => {
@@ -24,17 +29,52 @@ export default (state = defaultState, action) => {
 
             return {
                 ...state,
-                selectedCoins: newCoinList
+                selectedCoins: newCoinList,
+                updating: {
+                    ...state.updating,
+                    hasChanges: true
+                }
             };
         case 'add_coin':
             if (state.selectedCoins.filter(x => x.id === action.payload.newCoin.id).length !== 0)
                 return state;
 
-            return { ...state, selectedCoins: [...state.selectedCoins, action.payload.newCoin] };
+            return {
+                ...state,
+                selectedCoins: [...state.selectedCoins, action.payload.newCoin],
+                updating: {
+                    ...state.updating,
+                    hasChanges: true
+                }
+            };
         case 'remove_coin':
-            return { ...state, selectedCoins: [...state.selectedCoins.filter(x => x.id !== action.payload.id)] };
+            return {
+                ...state,
+                selectedCoins: [...state.selectedCoins.filter(x => x.id !== action.payload.id)],
+                updating: {
+                    ...state.updating,
+                    hasChanges: true
+                }
+            };
         case 'set_user_address':
             return { ...state, userAddress: action.payload.userAddress };
+        case 'start_portfolio_updating':
+            return {
+                ...state,
+                updating: {
+                    ...state.updating,
+                    timerId: action.payload.timerId
+                }
+            };
+
+        case 'portfolio_updated':
+            return {
+                ...state,
+                updating: {
+                    ...state.updating,
+                    hasChanges: false
+                }
+            };
         default:
             return state
     }

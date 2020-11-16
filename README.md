@@ -10,6 +10,8 @@ Test server: http://40.69.200.118/
 
 ## TODO List
   
+Validate data on back-end !important
+
 Add telegram bot to manage assets (research)
  
 Import token lists from 

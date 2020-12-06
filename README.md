@@ -6,10 +6,12 @@ Run
 docker-compose up --build
 ```
 
-Test server: http://40.69.200.118/
+Test server: http://165.227.161.218/
 
 ## TODO List
-  
+
+Rework coin list component UI
+
 Validate data on back-end !important
 
 Add telegram bot to manage assets (research)

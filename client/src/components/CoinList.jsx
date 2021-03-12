@@ -15,6 +15,7 @@ function CoinList() {
 
     return (
         <>
+            <PortfolioHeaders />
             {selectedCoins.map((x) =>
                 <Row key={x.id} className="portfolio-table__row">
                     <Col xs={3} lg={2}>{x.label}</Col>
@@ -25,7 +26,7 @@ function CoinList() {
                             placeholder="count"
                             value={x.count}
                             onChange={(e) => {
-                                dispatch({ type: 'add_coin_value', payload: { id: x.id, count: e.target.value } })
+                                dispatch({ type: 'add_coin_value', payload: { id: x.id, count: parseInt(e.target.value) } })
                             }}
                             className="form-control ds-input" />
                     </Col>
@@ -40,5 +41,14 @@ function CoinList() {
         </>
     );
 };
+
+
+var PortfolioHeaders = () => <Row className="portfolio-table__headers">
+    <Col xs={3} lg={2}>Coin</Col>
+    <Col xs={2} lg={2}>Price</Col>
+    <Col xs={3} lg={2}>Count</Col>
+    <Col xs={2} lg={2}>Total</Col>
+    <Col xs={1} lg={1}></Col>
+</Row>
 
 export default CoinList;

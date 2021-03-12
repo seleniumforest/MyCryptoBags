@@ -26,7 +26,6 @@ export default (state = defaultState, action) => {
         case 'add_coin_value':
             let newCoinList = [...state.selectedCoins];
             newCoinList.find(x => x.id === action.payload.id).count = action.payload.count;
-
             return {
                 ...state,
                 selectedCoins: newCoinList,
@@ -55,26 +54,7 @@ export default (state = defaultState, action) => {
                     ...state.updating,
                     hasChanges: true
                 }
-            };
-        case 'set_user_address':
-            return { ...state, userAddress: action.payload.userAddress };
-        case 'start_portfolio_updating':
-            return {
-                ...state,
-                updating: {
-                    ...state.updating,
-                    timerId: action.payload.timerId
-                }
-            };
-
-        case 'portfolio_updated':
-            return {
-                ...state,
-                updating: {
-                    ...state.updating,
-                    hasChanges: false
-                }
-            };
+            };  
         default:
             return state
     }

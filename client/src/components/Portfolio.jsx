@@ -6,10 +6,12 @@ import axios from 'axios';
 import AddCoin from './AddCoin';
 import CoinList from './CoinList';
 import PortfolioTotal from './PortfolioTotal';
+import { Button } from 'react-bootstrap';
 
 function Portfolio() {
-    const { coinsLoaded } = useSelector(state => ({
-        coinsLoaded: state.coinsLoaded
+    const { coinsLoaded, selectedCoins } = useSelector(state => ({
+        coinsLoaded: state.coinsLoaded, 
+        selectedCoins: state.selectedCoins
     }), shallowEqual);
 
     const dispatch = useDispatch();
@@ -22,31 +24,34 @@ function Portfolio() {
             });
     };
 
+    function copyImportantData() {
+        var data = JSON.stringify(selectedCoins.map((x) => ({name: x.label, count: x.count})));
+        navigator.clipboard.writeText(data);
+    }
+
     return (
         <Container>
             <div className="portfolio">
                 <div className="portfolio-total">
                     <PortfolioTotal />          
                 </div>
+                <div className="portfolio-addcoin">
+                    <AddCoin />          
+                </div>
                 <div className="portfolio-table">
                     <h3>Manage your assets</h3>
                     <Container>
-                        <PortfolioHeaders />
                         <CoinList />
-                        <AddCoin />
                     </Container>
+                </div>
+                <div className="portfolio-export">
+                    <Button onClick={() => copyImportantData() }>
+                        Copy data
+                    </Button>
                 </div>
             </div>
         </Container>
     );
 };
-
-var PortfolioHeaders = () => <Row className="portfolio-table__headers">
-    <Col xs={3} lg={2}>Coin</Col>
-    <Col xs={2} lg={2}>Price</Col>
-    <Col xs={3} lg={2}>Count</Col>
-    <Col xs={2} lg={2}>Total</Col>
-    <Col xs={1} lg={1}></Col>
-</Row>
 
 export default Portfolio;

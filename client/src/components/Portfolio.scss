@@ -1,5 +1,12 @@
 .portfolio {
+        &-total, &-addcoin {
+                display: inline-block;
+        }
         &-total {
+                width: 30%;
+        }
+        &-addcoin {
+                width: 70%;
         }
         &-table {
                 &__headers {

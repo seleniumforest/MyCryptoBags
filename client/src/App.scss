@@ -1,3 +1,36 @@
 .portfolio {
     margin: 20px 10px 10px;
 }
+
+.add-coin {
+    margin-top: 30px;
+}
+
+.portfolio {
+    &-total,
+    &-addcoin {
+        display: inline-block;
+    }
+    &-total {
+        width: 30%;
+        p {
+            font-size: 20px;
+            display: inline-block;
+        }
+
+        .spinner-border {
+            margin-left: 10px;
+        }
+    }
+    &-addcoin {
+        width: 70%;
+    }
+    &-table {
+        &__headers {
+            font-weight: bold;
+        }
+        &__row {
+            margin-top: 10px;
+        }
+    }
+}

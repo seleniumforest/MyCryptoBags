@@ -1,6 +1,5 @@
 import { Button, Col, Row } from 'react-bootstrap';
 import React from 'react';
-import './Portfolio.scss'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import numeral from 'numeral';
 

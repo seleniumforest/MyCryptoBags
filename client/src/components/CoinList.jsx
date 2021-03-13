@@ -21,7 +21,7 @@ function CoinList() {
                     <Col xs={2} lg={2}>{numeral(x.price).format(numberFormat)}</Col>
                     <Col xs={3} lg={2}>
                         <input
-                            type="text"
+                            type="number"
                             placeholder="count"
                             value={x.count}
                             onChange={(e) => {

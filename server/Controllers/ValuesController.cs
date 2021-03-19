@@ -22,6 +22,7 @@ namespace Server.Controllers
         }
         
         [HttpGet]
+        [ResponseCache(Duration = 120)]
         public async Task<ActionResult> All()
         {
             var result = await _client.CoinsClient.GetAllCoinsData();

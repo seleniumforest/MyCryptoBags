@@ -12,4 +12,10 @@ ENV DOTNET_USE_POLLING_FILE_WATCHER 1
 
 WORKDIR /app
 
+COPY *.csproj ./
+RUN dotnet restore
+
+COPY . ./
+RUN dotnet publish -c Release -o out
+
 ENTRYPOINT dotnet watch run --urls=http://+:5000

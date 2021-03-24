@@ -9,6 +9,7 @@ using CoinGecko.Interfaces;
 using Server.Models;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using Server.Services;
 
 namespace Server.Controllers
 {
@@ -16,44 +17,18 @@ namespace Server.Controllers
     [ApiController]
     public class CoinsController : Controller
     {
-        private readonly ICoinGeckoClient client;
-        private readonly IMemoryCache cache;
+        private readonly CoinsUpdateService coinsService;
 
-        public CoinsController(IMemoryCache memoryCache)
+        public CoinsController(CoinsUpdateService coinsService)
         {
-            client = CoinGeckoClient.Instance;
-            cache = memoryCache;
+            this.coinsService = coinsService;
         }
 
         [HttpGet]
         [Produces("application/json")]
-        public async Task<ActionResult> All()
+        public ActionResult All()
         {
-            var key = "api/coins/all";
-            var cached = cache.Get<string>(key);
-            if (!string.IsNullOrEmpty(cached))
-                return Content(cached);
-
-            var json = JsonConvert.SerializeObject(await GetCoinList());
-            cache.Set(key, json, TimeSpan.FromMinutes(1));
-
-            return Content(json);
-        }
-
-        async Task<List<CoinModel>> GetCoinList()
-        {
-            List<CoinModel> result = new List<CoinModel>();
-            foreach (int i in new int[] { 1, 2, 3, 4 })
-            {
-                result.AddRange((await client.CoinsClient.GetAllCoinsData("", 500, i, "", null)).Select(x => new CoinModel
-                {
-                    id = x.Id,
-                    label = x.Name,
-                    price = x.MarketData.CurrentPrice["usd"],
-                    count = 0
-                }).ToList());
-            }
-            return result;
+            return Content(coinsService.json);
         }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Server.Services;
 
 namespace server
 {
@@ -27,14 +28,16 @@ namespace server
             services.AddRazorPages();
             services.AddMvc();
             services.AddMemoryCache();
+
+            services.AddSingleton<CoinsUpdateService>();
+            services.AddHostedService<CoinsUpdateService>(provider => provider.GetService<CoinsUpdateService>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseHttpsRedirection();
-            app.UseRouting();
-            app.UseAuthorization();         
+            app.UseRouting();      
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

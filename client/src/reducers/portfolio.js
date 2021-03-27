@@ -26,6 +26,7 @@ export default (state = defaultState, action) => {
         case 'add_coin_value':
             let newCoinList = [...state.selectedCoins];
             newCoinList.find(x => x.id === action.payload.id).count = action.payload.count;
+            newCoinList = newCoinList.sort((a, b) => a.count * b.count < b.price * a.price ? -1 : 1);
             return {
                 ...state,
                 selectedCoins: newCoinList,
@@ -55,6 +56,14 @@ export default (state = defaultState, action) => {
                     hasChanges: true
                 }
             };  
+        case 'sort' :
+            return {
+                ...state,
+                selectedCoins: state.selectedCoins.sort((a, b) => a.count * a.price > b.count * b.price ? -1 : 1),
+                updating: {
+                    ...state.updating,
+                }
+            }; 
         default:
             return state
     }

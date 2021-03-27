@@ -23,29 +23,23 @@ namespace Server.Services
             if (cancellationToken.IsCancellationRequested)
                 return Task.CompletedTask;
 
-            timer = new Timer(async (state) => await DoWork(state), null, TimeSpan.Zero, TimeSpan.FromMinutes(5));
+            timer = new Timer(async (state) => await FetchCoins(state), null, TimeSpan.Zero, TimeSpan.FromMinutes(5));
 
             return Task.CompletedTask;
         }
 
-        private async Task DoWork(object state)
+        private async Task FetchCoins(object state)
         {
             List<CoinModel> result = new List<CoinModel>();
             foreach (int i in new int[] { 1, 2, 3, 4 })
             {
                 result.AddRange((await geckoClient.CoinsClient.GetAllCoinsData("", 500, i, "", null))
-                .Select(x =>
+                .Select(x => new CoinModel
                 {
-                    if (x.Id == "bitcoin")
-                        Console.WriteLine($"Btc price {x.MarketData.CurrentPrice["usd"]}");
-
-                    return new CoinModel
-                    {
-                        id = x.Id,
-                        label = x.Name,
-                        price = x.MarketData.CurrentPrice["usd"],
-                        count = 0
-                    };
+                    id = x.Id,
+                    label = x.Name,
+                    price = x.MarketData.CurrentPrice["usd"],
+                    count = 0
                 }).ToList());
             }
             this.coins = result;

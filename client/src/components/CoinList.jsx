@@ -27,6 +27,11 @@ function CoinList() {
                             onChange={(e) => {
                                 dispatch({ type: 'add_coin_value', payload: { id: x.id, count: parseInt(e.target.value) } })
                             }}
+                            onKeyPress={(event) => {
+                                if (event.key === "Enter")
+                                    dispatch({ type: 'sort' });
+                            }}
+                            onBlur={() => dispatch({ type: 'sort' })}
                             className="form-control ds-input" />
                     </Col>
                     <Col xs={2} lg={2}> {numeral(x.price * x.count).format(numberFormat)}</Col>

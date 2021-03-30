@@ -35,10 +35,10 @@ function CoinList() {
                             className="form-control ds-input" />
                     </Col>
                     <Col xs={2} lg={2}> {numeral(x.price * x.count).format(numberFormat)}</Col>
-                    <Col xs={1} lg={1}>
-                        <Button onClick={() => dispatch({ type: "remove_coin", payload: { id: x.id } })}>
+                    <Col xs={2} lg={2}>
+                        <Button className="btn btn-danger" onClick={() => dispatch({ type: "remove_coin", payload: { id: x.id } })}>
                             Delete
-                                </Button>
+                        </Button>
                     </Col>
                 </Row>
             )}

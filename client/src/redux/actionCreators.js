@@ -1,23 +1,25 @@
+import * as names from '../redux/constants';
+
 export const fetchCoins = (coins) => ({
-    type: 'fetch_coins',
+    type: names.FETCH_COINS,
     payload: { coins: coins, coinsLoaded: true }  
 })
 
 export const addValue = (coinId, count) => ({
-    type: 'add_coin_value',
+    type: names.ADD_COIN_VALUE,
     payload: { id: coinId, count: count }  
 })
 
 export const addCoin = (coin) => ({
-    type: 'add_coin',
+    type: names.ADD_COIN,
     payload: { newCoin: coin } 
 })
 
 export const removeCoin = (coinId) => ({
-    type: 'remove_coin',
+    type: names.REMOVE_COIN,
     payload: { id: coinId } 
 })
 
 export const sortCoinList = () => ({
-    type: 'sort_coin_list'
+    type: names.SORT_LIST
 })

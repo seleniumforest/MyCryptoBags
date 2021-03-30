@@ -1,18 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import Portfolio from './components/Portfolio';
+import './index.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import store from './store';
+import store from './redux/store';
 
 const cacheKey = 'portfolio';
 
 const render = () => ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
-            <App />
+            <Portfolio />
         </BrowserRouter>
     </Provider>, document.getElementById('root'));
 

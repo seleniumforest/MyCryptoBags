@@ -1,5 +1,5 @@
 import { createStore } from 'redux'
-import portfolio from './reducers/portfolio'
+import portfolio from './reducer'
 
 let persistedState = undefined;
 const cacheKey = 'portfolio';

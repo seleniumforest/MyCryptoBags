@@ -6,6 +6,7 @@ import AddCoin from './AddCoin';
 import CoinList from './CoinList';
 import PortfolioTotal from './PortfolioTotal';
 import { Button } from 'react-bootstrap';
+import { fetchCoins } from '../redux/actionCreators';
 
 function Portfolio() {
     const { coinsLoaded, selectedCoins } = useSelector(state => ({
@@ -18,9 +19,7 @@ function Portfolio() {
     if (!coinsLoaded) {
         axios
             .get('/api/coins/all')
-            .then(x => {
-                dispatch({ type: 'fetch_coins', payload: { coins: x.data, coinsLoaded: true } });
-            });
+            .then(x => dispatch(fetchCoins(x.data)));
     };
 
     function copyImportantData() {

@@ -2,6 +2,7 @@ import { Button, Col, Row } from 'react-bootstrap';
 import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import numeral from 'numeral';
+import { addValue, removeCoin, sortCoinList } from '../redux/actionCreators';
 
 const numberFormat = '$0,0.00';
 
@@ -24,19 +25,17 @@ function CoinList() {
                             type="number"
                             placeholder="count"
                             value={x.count}
-                            onChange={(e) => {
-                                dispatch({ type: 'add_coin_value', payload: { id: x.id, count: parseInt(e.target.value) } })
-                            }}
+                            onChange={(e) => dispatch(addValue(x.id, parseInt(e.target.value)))}
                             onKeyPress={(event) => {
                                 if (event.key === "Enter")
-                                    dispatch({ type: 'sort' });
+                                    dispatch(sortCoinList());
                             }}
-                            onBlur={() => dispatch({ type: 'sort' })}
+                            onBlur={() => dispatch(sortCoinList())}
                             className="form-control ds-input" />
                     </Col>
                     <Col xs={2} lg={2}> {numeral(x.price * x.count).format(numberFormat)}</Col>
                     <Col xs={2} lg={2}>
-                        <Button className="btn btn-danger" onClick={() => dispatch({ type: "remove_coin", payload: { id: x.id } })}>
+                        <Button className="btn btn-danger" onClick={() => dispatch(removeCoin(x.id))}>
                             Delete
                         </Button>
                     </Col>

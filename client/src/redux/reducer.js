@@ -1,18 +1,14 @@
+import * as names from './constants';
+
 let defaultState = {
     coins: [],
     coinsLoaded: false,
-    selectedCoins: [],
-    userAddress: '',
-    updating: {
-        timerId: 0,
-        lastUpdatedTime: 0,
-        hasChanges: false
-    }
+    selectedCoins: []
 };
 
 export default (state = defaultState, action) => {
     switch (action.type) {
-        case 'fetch_coins':
+        case names.FETCH_COINS:
             let selectedCoins = [...state.selectedCoins];
             let newCoins = action.payload.coins;
             selectedCoins.forEach(x => x.price = newCoins.find(y => y.id === x.id).price);
@@ -23,46 +19,31 @@ export default (state = defaultState, action) => {
                 selectedCoins: selectedCoins,
                 coinsLoaded: action.payload.coinsLoaded
             };
-        case 'add_coin_value':
+        case names.ADD_COIN_VALUE:
             let newCoinList = [...state.selectedCoins];
             newCoinList.find(x => x.id === action.payload.id).count = action.payload.count;
             newCoinList = newCoinList.sort((a, b) => a.count * b.count < b.price * a.price ? -1 : 1);
             return {
                 ...state,
-                selectedCoins: newCoinList,
-                updating: {
-                    ...state.updating,
-                    hasChanges: true
-                }
+                selectedCoins: newCoinList
             };
-        case 'add_coin':
+        case names.ADD_COIN:
             if (state.selectedCoins.filter(x => x.id === action.payload.newCoin.id).length !== 0)
                 return state;
 
             return {
                 ...state,
-                selectedCoins: [...state.selectedCoins, action.payload.newCoin],
-                updating: {
-                    ...state.updating,
-                    hasChanges: true
-                }
+                selectedCoins: [...state.selectedCoins, action.payload.newCoin]
             };
-        case 'remove_coin':
+        case names.REMOVE_COIN:
             return {
                 ...state,
-                selectedCoins: [...state.selectedCoins.filter(x => x.id !== action.payload.id)],
-                updating: {
-                    ...state.updating,
-                    hasChanges: true
-                }
+                selectedCoins: [...state.selectedCoins.filter(x => x.id !== action.payload.id)]
             };  
-        case 'sort' :
+        case names.SORT_LIST:
             return {
                 ...state,
-                selectedCoins: state.selectedCoins.sort((a, b) => a.count * a.price > b.count * b.price ? -1 : 1),
-                updating: {
-                    ...state.updating,
-                }
+                selectedCoins: state.selectedCoins.sort((a, b) => a.count * a.price > b.count * b.price ? -1 : 1)
             }; 
         default:
             return state

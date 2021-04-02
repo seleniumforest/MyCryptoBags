@@ -25,7 +25,7 @@ function CoinList() {
                             type="number"
                             placeholder="count"
                             value={x.count}
-                            onChange={(e) => dispatch(addValue(x.id, parseInt(e.target.value)))}
+                            onChange={(e) => dispatch(addValue(x.id, parseFloat(e.target.value)))}
                             onKeyPress={(event) => {
                                 if (event.key === "Enter")
                                     dispatch(sortCoinList());

@@ -23,10 +23,7 @@ body {
 }
 
 .portfolio {
-    &-total,
-    &-addcoin {
-        display: inline-block;
-    }
+    &-total
     &-total {
         width: 30%;
         p {
@@ -38,9 +35,6 @@ body {
             margin-left: 10px;
         }
     }
-    &-addcoin {
-        width: 70%;
-    }
     &-table {
         &__headers {
             font-weight: bold;
@@ -48,5 +42,8 @@ body {
         &__row {
             margin-top: 10px;
         }
+    }
+    &-export {
+        margin-top: 20px;
     }
 }

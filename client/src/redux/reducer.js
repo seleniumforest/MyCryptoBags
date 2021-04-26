@@ -3,7 +3,13 @@ import * as names from './constants';
 let defaultState = {
     coins: [],
     coinsLoaded: false,
-    selectedCoins: []
+    selectedCoins: [], 
+    customCoin: {
+        count: 0, 
+        price: 0,
+        name: "",
+        id: "",
+    }
 };
 
 export default (state = defaultState, action) => {
@@ -11,12 +17,17 @@ export default (state = defaultState, action) => {
         case names.FETCH_COINS:
             let selectedCoins = [...state.selectedCoins];
             let newCoins = action.payload.coins;
-            selectedCoins.forEach(x => x.price = newCoins.find(y => y.id === x.id).price);
+            selectedCoins.forEach(x => {
+                let newCoin = newCoins.find(y => y.id === x.id);
+                if (newCoin)
+                    x.price = newCoin.price
+            });
 
             return {
                 ...state,
                 coins: newCoins,
                 selectedCoins: selectedCoins,
+                сoinsInDropdown: newCoins.map(x => ({ value: x.id, label: x.name })),
                 coinsLoaded: action.payload.coinsLoaded
             };
         case names.ADD_COIN_VALUE:
@@ -41,10 +52,11 @@ export default (state = defaultState, action) => {
                 selectedCoins: [...state.selectedCoins.filter(x => x.id !== action.payload.id)]
             };  
         case names.SORT_LIST:
+            
             return {
                 ...state,
                 selectedCoins: state.selectedCoins.sort((a, b) => a.count * a.price > b.count * b.price ? -1 : 1)
-            }; 
+            }
         default:
             return state
     }

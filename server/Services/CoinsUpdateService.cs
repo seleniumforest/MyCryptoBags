@@ -39,6 +39,7 @@ namespace Server.Services
                     id = x.Id,
                     label = x.Name,
                     price = x.MarketData.CurrentPrice["usd"],
+                    mcap = x.MarketData.MarketCapRank,
                     count = 0
                 }).ToList());
             }

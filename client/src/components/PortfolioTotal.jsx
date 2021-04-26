@@ -15,9 +15,9 @@ function PortfolioTotal() {
         <>
             <h3>Your portfolio total</h3>
             <Container>
-                <p>
+                <h5>
                     {numeral(selectedCoins.reduce((a, b) => a + (b.price * b.count), 0)).format(numberFormat)}
-                </p>
+                </h5>
                 {
                     !coinsLoaded &&
                     <Spinner animation="border" role="status">

@@ -26,7 +26,7 @@ namespace server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddMvc();
+            services.AddControllers();
             services.AddMemoryCache();
 
             services.AddSingleton<CoinsUpdateService>();

@@ -2,7 +2,6 @@ import { Container } from 'react-bootstrap';
 import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
-import AddCoin from './AddCoin';
 import CoinList from './CoinList';
 import PortfolioTotal from './PortfolioTotal';
 import { Button } from 'react-bootstrap';
@@ -35,9 +34,6 @@ function Portfolio() {
             <div className="portfolio">
                 <div className="portfolio-total">
                     <PortfolioTotal />
-                </div>
-                <div className="portfolio-addcoin">
-                    <AddCoin />
                 </div>
                 <div className="portfolio-table">
                     <h3>Manage your assets</h3>

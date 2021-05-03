@@ -15,6 +15,11 @@ export const addCoin = (coin) => ({
     payload: { newCoin: coin } 
 })
 
+export const addCustomCoin = (coin) => ({
+    type: names.ADD_CUSTOM_COIN,
+    payload: { newCoin: coin } 
+})
+
 export const removeCoin = (coinId) => ({
     type: names.REMOVE_COIN,
     payload: { id: coinId } 
@@ -22,4 +27,19 @@ export const removeCoin = (coinId) => ({
 
 export const sortCoinList = () => ({
     type: names.SORT_LIST
+})
+
+export const setCoinPrice = (coinId, price) => ({
+    type: names.SET_COIN_PRICE,
+    payload: { coinId: coinId, price: price }
+})
+
+export const addNotes = (coinId, notes) => ({
+    type: names.ADD_NOTES,
+    payload: { coinId: coinId, notes: notes }
+})
+
+export const setFieldValue = (coinId, fieldName, value) => ({
+    type: names.SET_FIELD_VALUE,
+    payload: { coinId, fieldName, value }
 })

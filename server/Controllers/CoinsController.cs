@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using CoinGecko.Clients;
 using CoinGecko.Entities.Response.Coins;
@@ -39,15 +40,17 @@ namespace Server.Controllers
                 return Content("[]");
 
             var list = (await geckoClient.CoinsClient.GetCoinList(includePlatform: false))
-                .Where(x => x.Name.ToLowerInvariant().Contains(query.ToLowerInvariant()))
-                .Select(x => new {
+                .Where(x => x.Name.ToLowerInvariant().Contains(query.ToLowerInvariant()) || 
+                            x.Symbol.ToLowerInvariant().Contains(query.ToLowerInvariant()))
+                .Select(x => new
+                {
                     id = x.Id,
                     name = x.Name,
                     symbol = x.Symbol,
-                    mcap = coinsService.coins.FirstOrDefault(y => y.id == x.Id)?.mcap
+                    mcap = coinsService.coins.FirstOrDefault(y => y.Id == x.Id)?.MarketCap
                 });
 
-            return Content(JsonConvert.SerializeObject(list.Where(x=> x.mcap > 0).OrderBy(x => x.mcap).Concat(list.Where(x => x.mcap < 0 || x.mcap == null))));
+            return Content(JsonConvert.SerializeObject(list.Where(x => x.mcap > 0).OrderBy(x => x.mcap).Concat(list.Where(x => x.mcap < 0 || x.mcap == null))));
         }
     }
 }

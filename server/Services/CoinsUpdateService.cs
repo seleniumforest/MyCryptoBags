@@ -8,6 +8,7 @@ using Server.Models;
 using CoinGecko.Clients;
 using CoinGecko.Interfaces;
 using Newtonsoft.Json;
+using server.Services;
 
 namespace Server.Services
 {
@@ -17,6 +18,12 @@ namespace Server.Services
         public List<CoinModel> coins = new List<CoinModel>();
         public string json;
         private ICoinGeckoClient geckoClient = CoinGeckoClient.Instance;
+        private CoinMarketcapService mcapSvc;
+
+        public CoinsUpdateService(CoinMarketcapService mcapSvc) 
+        {
+            this.mcapSvc = mcapSvc;
+        }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -30,21 +37,18 @@ namespace Server.Services
 
         private async Task FetchCoins(object state)
         {
-            List<CoinModel> result = new List<CoinModel>();
-            foreach (int i in new int[] { 1, 2, 3, 4 })
-            {
-                result.AddRange((await geckoClient.CoinsClient.GetAllCoinsData("", 500, i, "", null))
-                .Select(x => new CoinModel
-                {
-                    id = x.Id,
-                    label = x.Name,
-                    price = x.MarketData.CurrentPrice["usd"],
-                    mcap = x.MarketData.MarketCapRank,
-                    count = 0
-                }).ToList());
-            }
-            this.coins = result;
-            this.json = JsonConvert.SerializeObject(result);
+            this.coins = (await geckoClient.CoinsClient.GetCoinList(includePlatform: false))
+                            .Select(x=> new CoinModel()
+                            {
+                                Id = x.Id,
+                                Label = x.Name,
+                                MarketCap = mcapSvc.GetMarketcapById(x.Id)
+                            })
+                            .OrderBy(x => x.MarketCap)
+                            .ToList();
+            this.json = JsonConvert.SerializeObject(coins
+                .Where(x=> x.MarketCap > 0).OrderBy(x => x.MarketCap)
+                .Concat(coins.Where(x => x.MarketCap < 0 || x.MarketCap == null)));
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

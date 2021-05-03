@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Server.Services;
+using server.Services;
 
 namespace server
 {
@@ -30,7 +31,9 @@ namespace server
             services.AddMemoryCache();
 
             services.AddSingleton<CoinsUpdateService>();
+            services.AddSingleton<CoinMarketcapService>();
             services.AddHostedService<CoinsUpdateService>(provider => provider.GetService<CoinsUpdateService>());
+            services.AddHostedService<CoinMarketcapService>(provider => provider.GetService<CoinMarketcapService>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

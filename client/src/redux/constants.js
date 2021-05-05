@@ -7,3 +7,4 @@ export const SET_COIN_PRICE = "set_coin_price";
 export const ADD_CUSTOM_COIN = "add_custom_coin";
 export const ADD_NOTES = "add_notes";
 export const SET_FIELD_VALUE = "set_field_value";
+export const SET_LOADED = "set_loaded";

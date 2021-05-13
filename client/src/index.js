@@ -28,3 +28,5 @@ store.subscribe(() => {
 })
 
 store.subscribe(render);
+
+console.log(`running in ${process.env.NODE_ENV} mode`);

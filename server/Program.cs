@@ -13,6 +13,11 @@ namespace server
     {
         public static void Main(string[] args)
         {
+#if DEBUG
+            Console.WriteLine("Running in Debug mode");
+#else
+            Console.WriteLine("Running in Production mode");
+#endif
             CreateHostBuilder(args).Build().Run();
         }
 
